@@ -17,20 +17,24 @@ class UserController extends Controller
     }
 
     public function store(Request $request)
-{
-    $user = Auth::user();
+    {
+        $request->validate([
+            'username' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'user_type' => 'required|string',
+            'password' => 'required|string|min:8',
+        ]);
 
-    $id = Auth::id();
+        User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'user_type' => $request->user_type,
+            'password' => Hash::make($request->password),
+        ]);
 
-    User::create([
-        'username' => $request->username,
-        'email' => $request->email,
-        'user_type' => $request->user_type,
-        'password' => Hash::make($request->password),
-    ]);
+        return redirect()->route('login')->with('success', 'Inscription réussie. Connectez-vous maintenant.');
+    }
 
-    return redirect()->route('login')->with('success', 'Inscription réussie. Connectez-vous maintenant.');
-}
 
     // Méthode pour afficher le formulaire de connexion
     public function showLoginForm()

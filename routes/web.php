@@ -5,7 +5,7 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\UtilisateursController;
 use App\Http\Controllers\PersonnesPhysiquesController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PersonnesMoralesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,7 +40,30 @@ Route::get('/users/{id}/delete', [UtilisateursController::class, 'delete'])->nam
 Route::put('/users/{id}/update', [UtilisateursController::class, 'update'])->name('update.user');
 
 
-Route::get('/physique', [PersonnesPhysiquesController::class, 'index'])->name('physique.index');
+
+Route::get('/physique', [PersonnesPhysiquesController::class, 'index'])->name('client.physique');
+Route::get('/client/physique/create', [PersonnesPhysiquesController::class, 'create'])->name('client.physique.create');
+Route::post('/client/physique/store', [PersonnesPhysiquesController::class, 'store'])->name('client.physique.store');
+
+Route::put('/client/physique/{id}/edit', [PersonnesPhysiquesController::class, 'edit'])->name('client.physique.edit');
+Route::post('/client/physique/{id}', [PersonnesPhysiquesController::class, 'update'])->name('client.physique.update');
+Route::delete('/client/physique/{id}', [PersonnesPhysiquesController::class, 'destroy'])->name('client.physique.destroy');
+
+// Routes pour les personnes morales
+Route::get('/moral', [PersonnesMoralesController::class, 'index'])->name('client.moral');
+Route::get('/client/moral/create', [PersonnesMoralesController::class, 'create'])->name('client.moral.create');
+Route::post('/client/moral/store', [PersonnesMoralesController::class, 'store'])->name('client.moral.store');
+
+
+// Routes pour les opérations de mise à jour
+Route::put('/client/moral/{id}/edit', [PersonnesMoralesController::class, 'edit'])->name('client.moral.edit');
+Route::post('/client/moral/{id}', [PersonnesMoralesController::class, 'update'])->name('client.moral.update');
+
+// Route pour l'opération de suppression
+//Route::delete('/client/moral/{id}', [PersonnesMoralesController::class, 'destroy'])->name('client.moral.destroy');
+
+
+
 
 
 Route::post('/create-profil', [ProfilController::class, 'store'])->name('create.profil');

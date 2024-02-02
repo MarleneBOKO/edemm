@@ -31,7 +31,7 @@
         <button class="bg-[#53ABDC] absolute top-1/2 transform -translate-y-1/2 right-4 px-4 h-11 text-white font-semibold rounded-md">Rechercher</button>
     </div>
 
-    <div class="flex items-center justify-between mt-4 ml-6 m-4">
+    <div class="flex items-c  enter justify-between mt-4 ml-6 m-4">
         <h3>Liste des personnes morales</h3>
 <!-- Modal toggle -->
         <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="bg-[#DCB253] h-11 rounded-md flex items-center px-4"  type="button">
@@ -59,7 +59,7 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                        <form action="" method="POST" class="p-4 md:p-5">
+                        <form action="{{ route('client.moral.store') }}" method="POST" class="p-4 md:p-5">
                             @csrf
                                 <div class="flex flex-row space-x-4">
                                     <div class="">
@@ -75,7 +75,7 @@
 
                                         <div class="mb-4">
                                             <label class="block text-sm text-gray-600 mt-2" for="siege">Siège social</label>
-                                            <input type="text" placeholder="Siège social" id="social" class="w-full px-3 py-2 border rounded-lg" name="siège_social" required/>
+                                            <input type="text" placeholder="Siège social" id="social" class="w-full px-3 py-2 border rounded-lg" name="siege_social" required/>
                                         </div>
 
 
@@ -96,7 +96,7 @@
                                         </div>
                                         <div class="mb-4">
                                             <label class="block text-sm text-gray-600 mt-2" for="prérep">Prénoms du représentant légal</label>
-                                            <input type="text" name="prenom_represant" placeholder="Prénoms du représentant légal" id="reppre" class="w-full px-3 py-2 border rounded-lg" required/>
+                                            <input type="text" name="prenom_representant" placeholder="Prénoms du représentant légal" id="reppre" class="w-full px-3 py-2 border rounded-lg" required/>
 
                                         </div>
                                         <div class="mb-4">
@@ -109,7 +109,7 @@
                                     <div>
                                         <div class="mb-4">
                                             <label class="block text-sm text-gray-600 mt-2" for="pre">Domicile du représentant légal</label>
-                                            <input type="text" placeholder="Domicile du représentant légal" id="sec_name" class="w-full px-3 py-2 border rounded-lg " name="dom-represantant" required/>
+                                            <input type="text" placeholder="Domicile du représentant légal" id="sec_name" class="w-full px-3 py-2 border rounded-lg " name="dom_representant" required/>
                                         </div>
 
                                         <div class="mb-4">
@@ -119,13 +119,13 @@
 
                                         <div class="mb-4">
                                             <label class="block text-sm text-gray-600 mt-2" for="pro">Nationalité</label>
-                                            <input type="text" placeholder="Nationalité" id="prof" class="w-full px-3 py-2 border rounded-lg" name="nationnalité" required/>
+                                            <input type="text" placeholder="Nationalité" id="prof" class="w-full px-3 py-2 border rounded-lg" name="nationalite" required/>
                                         </div>
 
 
                                         <div class="mb-4">
                                             <label class="block text-sm text-gray-600 mt-2" for="dom">Pièce d'identité présentée</label>
-                                            <input type="text"  name="piece_presente" placeholder="Pièce d'dentité présentée" id="adr" class="w-full px-3 py-2 border rounded-lg" required/>
+                                            <input type="text"  name="piece_presentee" placeholder="Pièce d'dentité présentée" id="adr" class="w-full px-3 py-2 border rounded-lg" required/>
                                         </div>
 
                                         <div class="mb-4">
@@ -151,7 +151,7 @@
                                 </div>
 
                                 <div class="flex flex-row ml-64">
-                                    <button type="button" class="bg-[#53ABDC] text-white py-4 mr-2 rounded-lg">Annuler</button>
+                                    <button type="button" class="bg-[#53ABDC] text-white py-4 mr-2 rounded-lg" onclick="window.history.back();">Annuler</button>
                                     <button type="submit" class="bg-[#DCB253] text-white py-4 rounded-lg">Enrégistrer</button>
                                 </div>
 
@@ -197,30 +197,32 @@
         <table class="table-auto w-full h-auto mb-4">
             <thead>
                 <tr class="border-b border-[#7D7272] border-opacity-40">
-                    <th class="p-2">Prénom & Nom</th>
-                    <th class="p-2">Date & lieu de n...</th>
-                    <th class="p-2">Situation mat..</th>
-                    <th class="p-2">Nationnalité</th>
+                    <th class="p-2">Dénomination</th>
+                    <th class="p-2">Siège social</th>
+                    <th class="p-2">Forme social</th>
+                    <th class="p-2">Représentant</th>
                     <th class="p-2">Action</th>
 
                 </tr>
             </thead>
             <tbody class="space-y-4">
+                @foreach ($personnesMorales as $personneMorale)
                     <tr class="space-y-4 border-b border-[#7D7272] border-opacity-40">
-                        <td>AZE</td>
-                        <td>AZER</td>
-                        <td>AZE</td>
+                        <td>{{ $personneMorale->denomination }}</td>
+                        <td>{{ $personneMorale->siege_social }}</td>
+                        <td>{{ $personneMorale->forme_sociale }}</td>
+                        <td>{{ $personneMorale->nom_representant }} {{ $personneMorale->prenom_representant }}</td>
                         <td>
-                            <div class="flex items-center justify-center gap-1">
-                                <a href="#" data-modal-target="crud-modale" data-modal-toggle="crud-modale">
+                            <div onclick="event.stopPropagation();" class="flex items-center justify-center gap-1">
+                                <a href="#" data-modal-target="crud-modale" data-modal-toggle="crud-modale" data-person-id="{{ $personneMorale->id }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"  viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 bg-blue-500 text-white  ">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                     </svg>
 
-                                    <div id="crud-modale" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                    <div onclick="event.stopPropagation();" id="crud-modale" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                         <div class="relative p-4 w-full max-w-md max-h-full">
                                             <!-- Modal content -->
-                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700" onclick="event.stopPropagation();">
                                                 <!-- Modal header -->
                                                 <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
@@ -234,43 +236,103 @@
                                                     </button>
                                                 </div>
                                                 <!-- Modal body -->
-                                                <form class="p-4 md:p-5">
-                                                    <div class="mb-4">
-                                                        <label class="block text-sm text-gray-600 mt-2" for="projectName">Nom d'utilisateur</label>
-                                                        <input type="text" value="" id="projectName" class="w-full px-3 py-2 border rounded-lg " name="username" required/>
-                                                    </div>
+                                                <form action="{{ route('client.moral.update', ['id' => $personneMorale->id]) }}" method="POST" class="p-4 md:p-5">
+                                                    @csrf
+                                                        @method('PUT')
+                                                            <div class="flex flex-row space-x-4" onclick="event.stopPropagation();">
+                                                                <div class="">
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="Dénomination">Dénomination</label>
+                                                                        <input value="{{ $personneMorale->denomination }}" type="text" placeholder="Dénomination" id="deno" class="w-full px-3 py-2 border rounded-lg " name="denomination" required/>
+                                                                    </div>
 
-                                                    <div class="mb-4">
-                                                        <label class="block text-sm text-gray-600 mt-2" for="projectDescription">Email</label>
-                                                        <input type="text" value="" id="projectDescription" class="w-full px-3 py-2 border rounded-lg" name="email" required/>
-                                                    </div>
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="forme">Forme sociale</label>
+                                                                        <input value="{{ $personneMorale->forme_sociale }}" type="text" placeholder="Forme sociale" id="sociale" class="w-full px-3 py-2 border rounded-lg" name="forme_sociale" required/>
+                                                                    </div>
 
-                                                    <div class="mb-4">
-                                                        <label class="block text-sm text-gray-600 mt-2" for="type">Type d'utilisateur</label>
-                                                        <select  name="user_type" id="type" value="" class="w-full px-3 py-2 border rounded-lg " >
-                                                            <option value="avatar">Admin</option>
-                                                            <option value="avatar">Simple</option>
-
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="flex items-start mb-5">
-                                                        <div class="flex items-center h-5">
-                                                            <input id="terms" aria-describedby="terms" type="checkbox" class="w-4 h-4 border border-gray-300 rounded  focus:ring-3 focus:ring-primary-300 dark:bg-black dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
-                                                        </div>
-                                                        <div class="ml-3 text-sm">
-                                                            <label for="terms" class="font-light text-black dark:text-black">J'accepte toutes les conditions générales </label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class=" flex flex-row ml-64">
-                                                        <button type="button" class=" bg-[#53ABDC] text-white py-3 mr-2 rounded-lg">Annuler</button>
-                                                        <button type="submit" class=" bg-[#DCB253] text-white py-3 rounded-lg">Enrégistrer</button>
-                                                    </div>
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="siege">Siège social</label>
+                                                                        <input value="{{ $personneMorale->siege_social }}" type="text" placeholder="Siège social" id="social" class="w-full px-3 py-2 border rounded-lg" name="siege_social" required/>
+                                                                    </div>
 
 
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="rccm">N° RCCM</label>
+                                                                        <input value="{{ $personneMorale->num_rccm }}" type="number"  name="num_rccm" placeholder="N° RCCM" id="numrccm" class="w-full px-3 py-2 border rounded-lg" required/>
+                                                                    </div>
 
-                                                </form>
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="adr">N°IFU</label>
+                                                                        <input value="{{ $personneMorale->num_ifu }}" type="number" name="num_ifu" placeholder="N°IFU" id="numifu" class="w-full px-3 py-2 border rounded-lg" required/>
+
+                                                                    </div>
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="rep">Nom du représentant légal</label>
+                                                                        <input type="text" value="{{ $personneMorale->nom_representant }}" name="nom_representant" placeholder="Nom du représentant légal" id="rep_leg" class="w-full px-3 py-2 border rounded-lg" required/>
+
+                                                                    </div>
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="prérep">Prénoms du représentant légal</label>
+                                                                        <input type="text" value="{{ $personneMorale->prenom_representant }}" name="prenom_representant" placeholder="Prénoms du représentant légal" id="reppre" class="w-full px-3 py-2 border rounded-lg" required/>
+
+                                                                    </div>
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="id_aut">Adresse du répresentan légal</label>
+                                                                        <input type="text" value="{{ $personneMorale->add_representant }}" name="add_representant" placeholder="Adresse du répresentan légal" id="delivre" class="w-full px-3 py-2 border rounded-lg" required/>
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div>
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="pre">Domicile du représentant légal</label>
+                                                                        <input type="text" value="{{ $personneMorale->dom_representant }}" placeholder="Domicile du représentant légal" id="sec_name" class="w-full px-3 py-2 border rounded-lg " name="dom_representant" required/>
+                                                                    </div>
+
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="mat">Résidence du représentant légal</label>
+                                                                        <input type="text" value="{{ $personneMorale->home_representant }}" placeholder="Résidence du représentant légal" id="sit" class="w-full px-3 py-2 border rounded-lg" name="home_representant" required/>
+                                                                    </div>
+
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="pro">Nationalité</label>
+                                                                        <input type="text" placeholder="Nationalité" id="prof" class="w-full px-3 py-2 border rounded-lg" value="{{ $personneMorale->nationalite }}" name="nationalite" required/>
+                                                                    </div>
+
+
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="dom">Pièce d'identité présentée</label>
+                                                                        <input type="text" value="{{ $personneMorale->piece_presentee }}"  name="piece_presentee" placeholder="Pièce d'dentité présentée" id="adr" class="w-full px-3 py-2 border rounded-lg" required/>
+                                                                    </div>
+
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="fixe">Téléphone fixe</label>
+                                                                        <input type="number" value="{{ $personneMorale->tel_fixe }}"  name="tel_fixe" placeholder="Téléphone fixe" id="t_f" class="w-full px-3 py-2 border rounded-lg" required/>
+
+                                                                    </div>
+
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="piece">Téléphone portable</label>
+                                                                        <input type="text" value="{{ $personneMorale->tel_portable }}" name="tel_portable" placeholder="Téléphone portable" id="pie_pre" class="w-full px-3 py-2 border rounded-lg" required/>
+
+                                                                    </div>
+
+                                                                    <div class="mb-4">
+                                                                        <label class="block text-sm text-gray-600 mt-2" for="del">Email</label>
+                                                                        <input type="text" value="{{ $personneMorale->email }}" name="email" placeholder="Email" id="date_lieu" class="w-full px-3 py-2 border rounded-lg" required/>
+
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div class="flex flex-row ml-64">
+                                                                <button type="button" class="bg-[#53ABDC] text-white py-4 mr-2 rounded-lg" onclick="window.history.back();">Annuler</button>
+                                                                <button type="submit" class="bg-[#DCB253] text-white py-4 rounded-lg">Enrégistrer</button>
+                                                            </div>
+                                            </form>
                                             </div>
                                         </div>
                                     </div>
@@ -315,6 +377,7 @@
                             </div>
                         </td>
                     </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
