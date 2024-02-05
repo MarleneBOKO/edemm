@@ -14,8 +14,17 @@ class PersonnesPhysiquesController extends Controller
         // Récupérer toutes les personnes physiques
         $personnesPhysiques = PersonnePhysique::all();
 
+         // Récupérez la liste paginée des utilisateurs
+         $personnesPhysiques = PersonnePhysique::paginate(10); // 10 utilisateurs par page, ajustez selon vos besoins
+
+         // Obtenez le numéro de la page actuelle
+         $currentPage = $personnesPhysiques->currentPage();
+
+         // Obtenez le nombre total de pages
+         $totalPages = $personnesPhysiques->lastPage();
+
         // Passer les données à la vue (si vous en avez une)
-        return view('client.physique', ['personnesPhysiques' => $personnesPhysiques]);
+        return view('client.physique', ['personnesPhysiques' => $personnesPhysiques,'currentPage'=>$currentPage, 'totalPages'=>$totalPages]);
     }
 
     public function create()
@@ -92,8 +101,9 @@ class PersonnesPhysiquesController extends Controller
         $personnePhysique = PersonnePhysique::findOrFail($id);
         $personnePhysique->delete();
 
-        return response()->json(['message' => 'Personne supprimé avec succès']);
+        return redirect()->route('client.physique')->with('success', 'Personne supprimé avec succès');
     }
+
 }
 
 

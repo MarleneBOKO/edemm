@@ -86,7 +86,7 @@
                             </div>
                     </a>
 
-                   <a href="{{ route('users.index') }}">
+                   <a href="{{ route('dashboard.utilisateur') }}">
                     <div class="flex items-center">
 
                         <svg class="w-6 h-6" viewBox="0 0 27 32" fill="none" xmlns="http://www.w3.org/2000/svg">

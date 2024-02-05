@@ -17,9 +17,9 @@
         <div class="w-full sm:w-1/3 h-36 shadow-md rounded-lg flex flex-col mt-2 mb-2 ml-4 mr-4 justify-center items-center text-white bg-gradient-to-br from-[#FFB496] opacity-70 to-[#FE8796] relative">
             <div class="flex flex-col">
                 <span>Client Total</span>
-                <span>100</span>
+                <span>{{ $totalClients }}</span>
                 <p class="ml-4 relative">Mise à jour depuis le</p>
-                <span class=" mx-auto">15/10/2023</span>
+                <span class=" mx-auto">{{ $lastUpdateDate }}</span>
 
             </div>
         </div>
@@ -28,9 +28,9 @@
         <div class="w-full sm:w-1/3 h-36 shadow-md rounded-lg flex flex-col mt-2 mb-2 ml-4 mr-4 justify-center items-center text-white bg-gradient-to-br from-[#7ABFF5] opacity-70 to-[#3096E7]">
             <div class="flex flex-col">
                 <span>Client Physique</span>
-                <span>50</span>
+                <span>{{ $physicalClients }}</span>
                 <p class="ml-4 relative">Mise à jour depuis le</p>
-                <span class=" mx-auto">15/10/2023</span>
+                <span class=" mx-auto">{{ $lastUpdateDate }}</span>
 
             </div>
 
@@ -38,9 +38,9 @@
         <div class="w-full sm:w-1/3 h-36 shadow-md rounded-lg flex flex-col mt-2 mb-2 ml-4 mr-4 justify-center items-center text-white bg-gradient-to-br from-[#72D4CA] opacity-70 to-[#2AC2AC]">
             <div class="flex flex-col">
                 <span>Client Moral</span>
-                <span>500</span>
+                <span>{{ $legalClients }}</span>
                 <p class="ml-4 relative">Mise à jour depuis le</p>
-                <span class=" mx-auto">10/10/2023</span>
+                <span class=" mx-auto">{{ $lastUpdateDate }}</span>
 
             </div>
         </div>
@@ -60,31 +60,18 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="border-b  py-2 border-black">Joli JOLIETTE</td>
-                    <td class="border-b  py-2 border-black">Succesions</td>
-                    <td class="border-b  py-2 border-black">20/052023</td>
-                </tr>
-                <tr>
-                    <td class="border-b  py-2 border-black">Joli JOLIETTE</td>
-                    <td class="border-b  py-2 border-black">Succesions</td>
-                    <td class="border-b  py-2 border-black">20/052023</td>
-                </tr>
-                <tr>
-                    <td class="border-b  py-2 border-black">Joli JOLIETTE</td>
-                    <td class="border-b  py-2 border-black">Succesions</td>
-                    <td class="border-b  py-2 border-black">20/052023</td>
-                </tr>
-                <tr>
-                    <td class="  py-2">Joli JOLIETTE</td>
-                    <td class="  py-2 ">Succesions</td>
-                    <td class="  py-2 ">20/052023</td>
-                </tr>
+                @foreach ($personnesPhysiques as $personne)
+                    <tr>
+                        <td class="border-b  py-2 border-black">{{ $personne->prenom}} {{ $personne->name}}</td>
+                        <td class="border-b  py-2 border-black">{{ $personne->nature_affaire }}</td>
+                        <td class="border-b  py-2 border-black">{{ $personne->date_operation }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
-    <div class="bg-white p-4 w-full md:w-1/2 ml-2">
 
+    <div class="bg-white p-4 w-full md:w-1/2 ml-2">
         <h4 class="text-black mb-4 font-bold text-[17px]">Personne Morale</h4>
         <table class="table-auto w-full h-auto mb-4">
             <thead>
@@ -95,27 +82,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class="border-b  py-2 border-black">Anyxtech</td>
-                    <td class="border-b  py-2 border-black">Successions</td>
-                    <td class="border-b  py-2 border-black">20/05/2023</td>
-                </tr>
-                <tr>
-                    <td class="border-b  py-2 border-black">Anyxtech</td>
-                    <td class="border-b  py-2 border-black">Successions</td>
-                    <td class="border-b  py-2 border-black">20/05/2023</td>
-                </tr>
-                <tr>
-                    <td class="border-b  py-2 border-black">Anyxtech</td>
-                    <td class="border-b  py-2 border-black">Successions</td>
-                    <td class="border-b  py-2 border-black">20/05/2023</td>
-                </tr>
-                <tr>
-                    <td class="  py-1 ">Anyxtech</td>
-                    <td class="  py-1 ">Successions</td>
-                    <td class="  py-2 ">20/05/2023</td>
-                </tr>
-
+                @foreach ($personnesMorales as $personne)
+                    <tr>
+                        <td class="border-b  py-2 border-black">{{ $personne->denomination }}</td>
+                        <td class="border-b  py-2 border-black">{{ $personne->nature_affaire }}</td>
+                        <td class="border-b  py-2 border-black">{{ $personne->date_operation }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

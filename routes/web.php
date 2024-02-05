@@ -34,9 +34,9 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/acceuil', [AcceuilController::class, 'acceuil'])->name('acceuil');
 
 
-Route::get('/users', [UtilisateursController::class, 'index'])->name('users.index');
-Route::get('/users/{id}/edit', [UtilisateursController::class, 'edit'])->name('edit');
-Route::get('/users/{id}/delete', [UtilisateursController::class, 'delete'])->name('delete');
+Route::get('/users', [UtilisateursController::class, 'index'])->name('dashboard.utilisateur');
+Route::get('/users/{id}/edit', [UtilisateursController::class, 'edit'])->name('edit.user');
+Route::delete('/users/{id}/delete', [UtilisateursController::class, 'delete'])->name('delete.user');
 Route::put('/users/{id}/update', [UtilisateursController::class, 'update'])->name('update.user');
 
 
@@ -45,8 +45,8 @@ Route::get('/physique', [PersonnesPhysiquesController::class, 'index'])->name('c
 Route::get('/client/physique/create', [PersonnesPhysiquesController::class, 'create'])->name('client.physique.create');
 Route::post('/client/physique/store', [PersonnesPhysiquesController::class, 'store'])->name('client.physique.store');
 
-Route::put('/client/physique/{id}/edit', [PersonnesPhysiquesController::class, 'edit'])->name('client.physique.edit');
-Route::post('/client/physique/{id}', [PersonnesPhysiquesController::class, 'update'])->name('client.physique.update');
+Route::get('/client/physique/{id}/edit', [PersonnesPhysiquesController::class, 'edit'])->name('client.physique.edit');
+Route::put('/client/physique/{id}', [PersonnesPhysiquesController::class, 'update'])->name('client.physique.update');
 Route::delete('/client/physique/{id}', [PersonnesPhysiquesController::class, 'destroy'])->name('client.physique.destroy');
 
 // Routes pour les personnes morales
@@ -60,7 +60,7 @@ Route::put('/client/moral/{id}/edit', [PersonnesMoralesController::class, 'edit'
 Route::post('/client/moral/{id}', [PersonnesMoralesController::class, 'update'])->name('client.moral.update');
 
 // Route pour l'opération de suppression
-//Route::delete('/client/moral/{id}', [PersonnesMoralesController::class, 'destroy'])->name('client.moral.destroy');
+Route::delete('/client/moral/{id}', [PersonnesMoralesController::class, 'destroy'])->name('client.moral.destroy');
 
 
 

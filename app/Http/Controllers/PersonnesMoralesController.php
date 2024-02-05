@@ -11,7 +11,17 @@ class PersonnesMoralesController extends Controller
     public function index()
     {
         $personnesMorales = PersonneMorale::all();
-        return view('client.moral', ['personnesMorales' => $personnesMorales]);
+
+        // Récupérez la liste paginée des utilisateurs
+        $personnesMorales = PersonneMorale::paginate(10); // 10 utilisateurs par page, ajustez selon vos besoins
+
+        // Obtenez le numéro de la page actuelle
+        $currentPage = $personnesMorales->currentPage();
+
+        // Obtenez le nombre total de pages
+        $totalPages = $personnesMorales->lastPage();
+
+        return view('client.moral', ['personnesMorales' => $personnesMorales, 'currentPage'=>$currentPage, 'totalPages'=>$totalPages]);
     }
 
     // Afficher le formulaire de création

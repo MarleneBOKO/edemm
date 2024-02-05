@@ -24,6 +24,6 @@ class ProfilController extends Controller
             'password' => Hash::make($validatedData['password']),
         ]);
 
-        return redirect()->route('users.index')->with('success', 'Utilisateur créé avec succès.');
+        return redirect()->route('dashboard.utilisateur')->with('success', 'Utilisateur créé avec succès.');
     }
 }
