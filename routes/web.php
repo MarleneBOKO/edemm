@@ -6,6 +6,7 @@ use App\Http\Controllers\UtilisateursController;
 use App\Http\Controllers\PersonnesPhysiquesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonnesMoralesController;
+use App\Http\Controllers\ClientPhysiqueOperationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -64,6 +65,9 @@ Route::delete('/client/moral/{id}', [PersonnesMoralesController::class, 'destroy
 
 
 
-
+Route::get('/operation', [ClientPhysiqueOperationController::class, 'index'])->name('client.operation');
 
 Route::post('/create-profil', [ProfilController::class, 'store'])->name('create.profil');
+Route::post('/operations/client-physique/store', [ClientPhysiqueOperationController::class, 'store'])->name('client.physique.operation.store');
+Route::put('/client/physique/operation/{operation}', [ClientPhysiqueOperationController::class, 'update'])->name('client.physique.operation.update');
+Route::delete('/client/physique/operation/{operation}', [ClientPhysiqueOperationController::class, 'destroy'])->name('client.physique.operation.destroy');
