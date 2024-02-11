@@ -304,34 +304,9 @@
 </div>
 
 
-    <div class="flex items-center justify-between mt-4 ml-6 m-4 ">
-        <div class="flex items-center bg-white rounded-lg ml-auto mr-80">
-            <div class="relative px-1 py-1 mr-2">
-                <button class="h-11 flex items-center px-4">
-                    Previous
-                </button>
-            </div>
+  
 
-            <div class="flex space-x-2">
-
-                    <div class="border-l h-14 mx-2 border-[#7D7272] opacity-20"></div>
-                    <div class="relative px-1 py-1">
-                        <button class="h-11 rounded-md flex items-center ">
-
-                        </button>
-                    </div>
-
-            </div>
-
-            <div class="border-l h-14 mx-2 border-[#7D7272] opacity-20"></div>
-
-            <div class="relative px-2 py-1 ml-2">
-                <button class="h-11 rounded-md flex items-center">
-                    Next
-                </button>
-            </div>
-        </div>
-
+</div>
 </div>
     </div>
 

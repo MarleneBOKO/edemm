@@ -7,6 +7,7 @@ use App\Http\Controllers\PersonnesPhysiquesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonnesMoralesController;
 use App\Http\Controllers\ClientPhysiqueOperationController;
+use App\Http\Controllers\ClientMoraleOperationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,11 +64,17 @@ Route::post('/client/moral/{id}', [PersonnesMoralesController::class, 'update'])
 // Route pour l'opération de suppression
 Route::delete('/client/moral/{id}', [PersonnesMoralesController::class, 'destroy'])->name('client.moral.destroy');
 
-
-
-Route::get('/operation', [ClientPhysiqueOperationController::class, 'index'])->name('client.operation');
-
 Route::post('/create-profil', [ProfilController::class, 'store'])->name('create.profil');
+
+// opération physique
+Route::get('/operation_physique', [ClientPhysiqueOperationController::class, 'index'])->name('client.operation');
 Route::post('/operations/client-physique/store', [ClientPhysiqueOperationController::class, 'store'])->name('client.physique.operation.store');
 Route::put('/client/physique/operation/{operation}', [ClientPhysiqueOperationController::class, 'update'])->name('client.physique.operation.update');
 Route::delete('/client/physique/operation/{operation}', [ClientPhysiqueOperationController::class, 'destroy'])->name('client.physique.operation.destroy');
+
+
+// opération morale
+Route::get('/operation_morale', [ClientMoraleOperationController::class, 'index'])->name('client.operationm');
+Route::post('/operations/client-morale/store', [ClientMoraleOperationController::class, 'store'])->name('client.morale.operation.store');
+Route::put('/client/morale/operation/{operation}', [ClientMoraleOperationController::class, 'update'])->name('client.morale.operation.update');
+Route::delete('/client/morale/operation/{operation}', [ClientMoraleOperationController::class, 'destroy'])->name('client.morale.operation.destroy');

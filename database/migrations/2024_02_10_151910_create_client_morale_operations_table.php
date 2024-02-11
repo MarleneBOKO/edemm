@@ -19,9 +19,8 @@ return new class extends Migration
             $table->string('moyen');
             $table->decimal('montant', 10, 2);
             $table->date('date_operation');
-            $table->unsignedBigInteger('personne_physique_id');
+            $table->unsignedBigInteger('personne_morale_id');
             $table->timestamps();
-
             $table->foreign('personne_morale_id')->references('id')->on('personnes_morales')->onDelete('cascade');
         });
     }

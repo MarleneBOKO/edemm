@@ -60,12 +60,16 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($personnesPhysiques as $personne)
-                    <tr>
-                        <td class="border-b  py-2 border-black">{{ $personne->prenom}} {{ $personne->name}}</td>
-                        <td class="border-b  py-2 border-black">{{ $personne->nature_affaire }}</td>
-                        <td class="border-b  py-2 border-black">{{ $personne->date_operation }}</td>
-                    </tr>
+                @foreach ($operationPhysique as $operation)
+                    @foreach ($personnesPhysiques as $personne)
+                        @if ( $operation->personne_physique_id === $personne->id )
+                            <tr>
+                                <td class="border-b  py-2 border-black">{{ $personne->name }} {{ $personne->prenom }}</td>
+                                <td class="border-b  py-2 border-black">{{ $operation->nature }}</td>
+                                <td class="border-b  py-2 border-black">{{ $operation->date_operation }}</td>
+                            </tr>
+                        @endif
+                    @endforeach
                 @endforeach
             </tbody>
         </table>
@@ -82,13 +86,17 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach ($operationMorale as $operation)
                 @foreach ($personnesMorales as $personne)
-                    <tr>
-                        <td class="border-b  py-2 border-black">{{ $personne->denomination }}</td>
-                        <td class="border-b  py-2 border-black">{{ $personne->nature_affaire }}</td>
-                        <td class="border-b  py-2 border-black">{{ $personne->date_operation }}</td>
-                    </tr>
+                    @if ( $operation->personne_morale_id === $personne->id )
+                        <tr>
+                            <td class="border-b  py-2 border-black">{{ $personne->denomination }}</td>
+                            <td class="border-b  py-2 border-black">{{ $operation->nature }}</td>
+                            <td class="border-b  py-2 border-black">{{ $operation->date_operation }}</td>
+                        </tr>
+                    @endif
                 @endforeach
+            @endforeach
             </tbody>
         </table>
     </div>

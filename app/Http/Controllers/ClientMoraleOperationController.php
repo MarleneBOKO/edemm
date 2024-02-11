@@ -4,15 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\PersonnePhysique;
-use App\Models\ClientPhysiqueOperation;
+use App\Models\PersonneMorale;
+use App\Models\ClientMoraleOperation;
 
-class ClientPhysiqueOperationController extends Controller
+class ClientMoraleOperationController extends Controller
 {
     public function index(){
-        $personnesPhysiques = PersonnePhysique::all();
-        $operationPhysique = ClientPhysiqueOperation::all();
-        return view('client.operation', ['personnesPhysiques' => $personnesPhysiques, 'operationPhysique' => $operationPhysique]);
+        $personnesMorales = PersonneMorale::all();
+        $operationMorale = ClientMoraleOperation::all();
+        return view('client.operationm', ['personnesMorales' => $personnesMorales, 'operationMorale' => $operationMorale]);
     }
 
     public function store(Request $request){
@@ -21,25 +21,25 @@ class ClientPhysiqueOperationController extends Controller
             'moyen' => 'required|string',
             'montant' => 'required|numeric',
             'Date_op' => 'required|date',
-            'client' => 'required|exists:personnes_physiques,id', // Assurez-vous que le client existe dans la table des personnes physiques
+            'client' => 'required|exists:personnes_morales,id', // Assurez-vous que le client existe dans la table des personnes Morales
         ]);
 
-        // Créer une nouvelle opération pour le client physique
-        $operation = new ClientPhysiqueOperation();
+        // Créer une nouvelle opération pour le client Morale
+        $operation = new ClientMoraleOperation();
         $operation->nature = $request->nat;
         $operation->moyen = $request->moyen;
         $operation->montant = $request->montant;
         $operation->date_operation = $request->Date_op;
-        $operation->personne_physique_id = $request->client;
+        $operation->personne_morale_id = $request->client;
         $operation->save();
 
         // Rediriger avec un message de succès
         return redirect()->back()->with('success', 'Opération enregistrée avec succès.');
     }
     public function edit($id) {
-        $operation = ClientPhysiqueOperation::find($id);
-        $personnesPhysiques = PersonnePhysique::all();
-        return view('client.operation', ['operation' => $operation, 'personnesPhysiques' => $personnesPhysiques]);
+        $operation = ClientMoraleOperation::find($id);
+        $personnesMorales = PersonneMorale::all();
+        return view('client.operationm', ['operation' => $operation, 'personnesMorales' => $personnesMorales]);
     }
 
     public function update(Request $request, $id){
@@ -49,14 +49,16 @@ class ClientPhysiqueOperationController extends Controller
         'moyen' => 'required|string',
         'montant' => 'required|numeric',
         'Date_op' => 'required|date',
+        'client' => 'required|exists:personnes_morales,id',
     ]);
 
     // Mettre à jour l'opération
-    $operation = ClientPhysiqueOperation::findOrFail($id);
+    $operation = ClientMoraleOperation::findOrFail($id);
     $operation->nature = $request->input('nat');
     $operation->moyen = $request->input('moyen');
     $operation->montant = $request->input('montant');
     $operation->date_operation = $request->input('Date_op');
+    $operation->personne_morale_id = $request->client;
     $operation->save();
 
     // Rediriger avec un message de succès
@@ -64,7 +66,7 @@ class ClientPhysiqueOperationController extends Controller
     }
 
     public function destroy($id){
-        $operation = ClientPhysiqueOperation::findOrFail($id);
+        $operation = ClientMoraleOperation::findOrFail($id);
         $operation->delete();
 
         return redirect()->back()->with('success', 'L\'opération a été supprimée avec succès.');
