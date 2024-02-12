@@ -35,11 +35,11 @@
                     </div>
                 </div>
 
-                <!-- Partie droite avec la photo de l'admin et les options -->
+                <!-- Partie droite avec la photo de l'admin (utilisateur) et les options -->
                 <div class="flex items-center ml-auto">
                     <div class="border-l mx-4 h-6 text-black"></div>
                     <img src="{{ asset('images/Ellipse 2.png') }}" alt="Admin" class="h-8 w-8 rounded-full cursor-pointer" id="adminToggle">
-                    <!-- Menu déroulant pour le profil et la déconnexion -->
+                    <!-- Menu déroulant pour le profil et la déconnexion de l'utilisateur -->
                     <div class="relative">
                         <button class="text-black" id="authentication-modal">
                             <!-- Icône de flèche vers le bas de Heroicons -->
@@ -48,8 +48,11 @@
                             </svg>
                         </button>
                         <div class="absolute right-0 mt-2 bg-white p-2 rounded shadow-md dropdown-menu" id="dropdownMenu">
-                            <a href="#" class="block px-4 py-2 text-gray-800">Profil</a>
-                            <a href="#" class="block px-4 py-2 text-gray-800">Déconnexion</a>
+                            <a href="{{ route('profile') }}" class="block px-4 py-2 text-gray-800">Profil</a>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="block px-4 py-2 text-gray-800">Déconnexion</button>
+                            </form>
                         </div>
                     </div>
 

@@ -8,20 +8,46 @@ use Illuminate\Validation\Rule;
 class UtilisateursController extends Controller
 {
 
-    public function index(){
-        $users = User::all(); // Récupérer tous les utilisateurs depuis le modèle User
-        // Récupérez la liste paginée des utilisateurs
-        $users = User::paginate(10); // 10 utilisateurs par page, ajustez selon vos besoins
+    public function index(Request $request){
+        // Récupérer la requête de recherche depuis l'URL
+        $query = $request->input('query');
 
-        // Obtenez le numéro de la page actuelle
-        $currentPage = $users->currentPage();
+        // Si une requête de recherche est effectuée
+        if($query){
+            // Effectuer la recherche et paginer les résultats
+            $users = User::query()
+                ->where('username', 'like', '%'.$query.'%')
+                ->orWhere('user_type', 'like', '%'.$query.'%')
+                ->paginate(5); // 10 utilisateurs par page, ajustez selon vos besoins
 
-        // Obtenez le nombre total de pages
-        $totalPages = $users->lastPage();
+            // Réinitialiser le numéro de page actuel car les résultats sont paginés
+            $currentPage = 1;
 
-        return view('dashboard.utilisateur', compact('users','users', 'currentPage', 'totalPages'));
+            // Calculer le nombre total de pages basé sur les résultats de la recherche paginés
+            $totalPages = $users->lastPage();
+        } else {
+            $request->session()->forget('search_query');
+            // Si aucune recherche n'est effectuée, récupérer tous les utilisateurs paginés
+            $users = User::paginate(5); // 5 utilisateurs par page, ajustez selon vos besoins
+
+            // Obtenez le numéro de la page actuelle
+            $currentPage = $users->currentPage();
+
+            // Obtenez le nombre total de pages
+            $totalPages = $users->lastPage();
+        }
+
+        return view('dashboard.utilisateur', compact('users', 'currentPage', 'totalPages', 'query'));
     }
 
+
+    public function show(){
+        // Récupérez les données de profil de l'utilisateur depuis la base de données
+        $user = auth()->user();
+
+        // Retournez la vue du profil avec les données de l'utilisateur
+        return view('dashboard.profile', ['user' => $user]);
+    }
     public function edit($id){
         $user = User::find($id);
 

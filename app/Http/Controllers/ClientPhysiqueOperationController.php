@@ -9,11 +9,28 @@ use App\Models\ClientPhysiqueOperation;
 
 class ClientPhysiqueOperationController extends Controller
 {
-    public function index(){
-        $personnesPhysiques = PersonnePhysique::all();
-        $operationPhysique = ClientPhysiqueOperation::all();
+    public function index(Request $request){
+        $query = $request->input('query');
+
+
+
+        // Effectuer la recherche dans les opérations physiques
+
+
+            if($query){
+                $operationPhysique = ClientPhysiqueOperation::query()
+                ->where('nature', 'like', '%'.$query.'%')
+                ->orWhere('moyen', 'like', '%'.$query.'%')
+                ->paginate(5);
+            } else {
+                $request->session()->forget('search_query');
+                // Récupérer toutes les personnes physiques
+                $personnesPhysiques = PersonnePhysique::paginate(5);
+            }
+
         return view('client.operation', ['personnesPhysiques' => $personnesPhysiques, 'operationPhysique' => $operationPhysique]);
     }
+
 
     public function store(Request $request){
         $request->validate([

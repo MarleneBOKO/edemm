@@ -20,16 +20,20 @@
                 <span>Client physique</span>
             </div>
             <div class="relative mt-4 ml-6 m-4">
-        <div class="flex relative ">
-            <input type="text" placeholder="Rechercher un utilisateur..." class="bg-white px-8 py-1 rounded-md shadow-md w-full h-20">
-            <!-- Icône de recherche dans le champ de recherche -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.2-5.2"></path>
-                <circle cx="10" cy="10" r="8"></circle>
-            </svg>
-        </div>
-        <button class="bg-[#53ABDC] absolute top-1/2 transform -translate-y-1/2 right-4 px-4 h-11 text-white font-semibold rounded-md">Rechercher</button>
-    </div>
+                <form action="{{ route('client.physique') }}" method="GET" class="flex relative">
+                    <input type="text" name="query" placeholder="Rechercher un utilisateur..." class="bg-white px-8 py-1 rounded-md shadow-md w-full h-20">
+                    <!-- Icône de recherche dans le champ de recherche -->
+                    <button type="submit" class="bg-[#53ABDC] absolute top-1/2 transform -translate-y-1/2 right-4 px-4 h-11 text-white font-semibold rounded-md">
+                        <!-- Icône de loupe -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.2-5.2"></path>
+                            <circle cx="10" cy="10" r="8"></circle>
+                        </svg>
+
+                        Rechercher
+                    </button>
+                </form>
+            </div>
 
     <div class="flex items-center justify-between mt-4 ml-6 m-4">
         <h3>Liste des personnes physique</h3>
@@ -405,19 +409,23 @@
     </div>
 </div>
 
-<div class="flex items-center justify-between mt-4 ml-6 m-4 ">
+<div class="flex items-center justify-between mt-4 ml-6 m-4">
     <div class="flex items-center bg-white rounded-lg ml-auto mr-80">
         <div class="relative px-1 py-1 mr-2">
-            <button class="h-11 flex items-center px-4">
-                Previous
-            </button>
+            <!-- Bouton "Précédent" -->
+            @if ($personnesPhysiques->previousPageUrl())
+                <a href="{{ $personnesPhysiques->previousPageUrl() }}" class="h-11 flex items-center px-4">Previous</a>
+            @else
+                <button class="h-11 flex items-center px-4" disabled>Previous</button>
+            @endif
         </div>
 
         <div class="flex space-x-2">
-            @for ($i = 1; $i <= $totalPages; $i++)
+            @for ($i = 1; $i <= $personnesPhysiques->lastPage(); $i++)
                 <div class="border-l h-14 mx-2 border-[#7D7272] opacity-20"></div>
                 <div class="relative px-1 py-1">
-                    <button class="h-11 rounded-md flex items-center {{ $currentPage == $i ? 'bg-gray-500 text-white' : '' }}">
+                    <!-- Bouton de numéro de page -->
+                    <button class="h-11 rounded-md flex items-center {{ $personnesPhysiques->currentPage() == $i ? 'bg-gray-500 text-white' : '' }}">
                         {{ $i }}
                     </button>
                 </div>
@@ -427,13 +435,16 @@
         <div class="border-l h-14 mx-2 border-[#7D7272] opacity-20"></div>
 
         <div class="relative px-2 py-1 ml-2">
-            <button class="h-11 rounded-md flex items-center">
-                Next
-            </button>
+            <!-- Bouton "Suivant" -->
+            @if ($personnesPhysiques->nextPageUrl())
+                <a href="{{ $personnesPhysiques->nextPageUrl() }}" class="h-11 rounded-md flex items-center">Next</a>
+            @else
+                <button class="h-11 rounded-md flex items-center" disabled>Next</button>
+            @endif
         </div>
     </div>
-
 </div>
+
 </div>
     </div>
 

@@ -8,12 +8,22 @@ use App\Models\PersonneMorale;
 
 class PersonnesMoralesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $personnesMorales = PersonneMorale::all();
+        // Récupérer toutes les personnes Morales
+        $query = $request->input('query');
 
-        // Récupérez la liste paginée des utilisateurs
-        $personnesMorales = PersonneMorale::paginate(10); // 10 utilisateurs par page, ajustez selon vos besoins
+        // Si une recherche est effectuée, appliquez le filtre
+        if($query){
+            $personnesMorales = PersonneMorale::query()
+                ->where('name', 'like', '%'.$query.'%')
+                ->orWhere('prenom', 'like', '%'.$query.'%')
+                ->paginate(5);
+        } else {
+            $request->session()->forget('search_query');
+            // Sinon, récupérez la liste paginée des utilisateurs
+            $personnesMorales = PersonneMorale::paginate(5);
+        }
 
         // Obtenez le numéro de la page actuelle
         $currentPage = $personnesMorales->currentPage();

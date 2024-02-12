@@ -9,23 +9,38 @@ use App\Models\PersonnePhysique;
 
 class PersonnesPhysiquesController extends Controller
 {
-    public function index()
-    {
-        // Récupérer toutes les personnes physiques
-        $personnesPhysiques = PersonnePhysique::all();
+    public function index(Request $request){
+        // Récupérer la requête de recherche
+        $query = $request->input('query');
 
-         // Récupérez la liste paginée des utilisateurs
-         $personnesPhysiques = PersonnePhysique::paginate(10); // 10 utilisateurs par page, ajustez selon vos besoins
+        // Si une recherche est effectuée, appliquer le filtre
+        if($query){
+            $request->session()->put('search_query', $query);
+            $personnesPhysiques = PersonnePhysique::query()
+                ->where('name', 'like', '%'.$query.'%')
+                ->orWhere('prenom', 'like', '%'.$query.'%')
+                ->paginate(5);
+        } else {
+            // Sinon, récupérer la liste paginée des utilisateurs
+            $request->session()->forget('search_query');
+            $personnesPhysiques = PersonnePhysique::paginate(5);
+        }
 
-         // Obtenez le numéro de la page actuelle
-         $currentPage = $personnesPhysiques->currentPage();
+        // Obtenez le numéro de la page actuelle
+        $currentPage = $personnesPhysiques->currentPage();
 
-         // Obtenez le nombre total de pages
-         $totalPages = $personnesPhysiques->lastPage();
+        // Obtenez le nombre total de pages
+        $totalPages = $personnesPhysiques->lastPage();
 
-        // Passer les données à la vue (si vous en avez une)
-        return view('client.physique', ['personnesPhysiques' => $personnesPhysiques,'currentPage'=>$currentPage, 'totalPages'=>$totalPages]);
+        // Rediriger vers la même route sans les paramètres de requête si aucun filtre de recherche n'est appliqué
+        if (!$query && $request->session()->has('search_query')) {
+            return redirect()->route('client.physique');
+        }
+
+        return view('client.physique', ['personnesPhysiques' => $personnesPhysiques, 'currentPage'=>$currentPage, 'totalPages'=>$totalPages, 'query' => $query]);
     }
+
+
 
     public function create()
     {

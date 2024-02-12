@@ -9,11 +9,28 @@ use App\Models\ClientMoraleOperation;
 
 class ClientMoraleOperationController extends Controller
 {
-    public function index(){
-        $personnesMorales = PersonneMorale::all();
-        $operationMorale = ClientMoraleOperation::all();
+    public function index(Request $request){
+        $query = $request->input('query');
+
+
+
+        // Effectuer la recherche dans les opérations Morales
+
+
+            if($query){
+                $operationMorale = ClientMoraleOperation::query()
+                ->where('nature', 'like', '%'.$query.'%')
+                ->orWhere('moyen', 'like', '%'.$query.'%')
+                ->paginate(5);
+            } else {
+                $request->session()->forget('search_query');
+                // Récupérer toutes les personnes Morales
+                $personnesMorales = PersonneMorale::paginate(5);
+            }
+
         return view('client.operationm', ['personnesMorales' => $personnesMorales, 'operationMorale' => $operationMorale]);
     }
+
 
     public function store(Request $request){
         $request->validate([

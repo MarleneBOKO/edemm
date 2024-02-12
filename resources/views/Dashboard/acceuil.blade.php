@@ -19,7 +19,7 @@
                 <span>Client Total</span>
                 <span>{{ $totalClients }}</span>
                 <p class="ml-4 relative">Mise à jour depuis le</p>
-                <span class=" mx-auto">{{ $lastUpdateDate }}</span>
+                <span class=" mx-auto">{{ $lastUpdate }}</span>
 
             </div>
         </div>
@@ -30,7 +30,7 @@
                 <span>Client Physique</span>
                 <span>{{ $physicalClients }}</span>
                 <p class="ml-4 relative">Mise à jour depuis le</p>
-                <span class=" mx-auto">{{ $lastUpdateDate }}</span>
+                <span class=" mx-auto">{{ $lastUpdateDateP }}</span>
 
             </div>
 
@@ -40,7 +40,7 @@
                 <span>Client Moral</span>
                 <span>{{ $legalClients }}</span>
                 <p class="ml-4 relative">Mise à jour depuis le</p>
-                <span class=" mx-auto">{{ $lastUpdateDate }}</span>
+                <span class=" mx-auto">{{ $lastUpdateDateM }}</span>
 
             </div>
         </div>

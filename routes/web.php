@@ -33,6 +33,7 @@ Route::post('/login', [UserController::class, 'login']);
 Route::get('/dashboard', [UserController::class, 'showDashboard'])->name('dashboard');
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
 Route::get('/acceuil', [AcceuilController::class, 'acceuil'])->name('acceuil');
 
 
@@ -65,6 +66,8 @@ Route::post('/client/moral/{id}', [PersonnesMoralesController::class, 'update'])
 Route::delete('/client/moral/{id}', [PersonnesMoralesController::class, 'destroy'])->name('client.moral.destroy');
 
 Route::post('/create-profil', [ProfilController::class, 'store'])->name('create.profil');
+Route::get('/profile', [UtilisateursController::class, 'show'])->name('profile');
+
 
 // opération physique
 Route::get('/operation_physique', [ClientPhysiqueOperationController::class, 'index'])->name('client.operation');
