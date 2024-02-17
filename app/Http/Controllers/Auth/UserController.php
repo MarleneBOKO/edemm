@@ -37,6 +37,7 @@ class UserController extends Controller
 
 
     // Méthode pour afficher le formulaire de connexion
+    
     public function showLoginForm()
     {
         return view('auth.login');

@@ -63,7 +63,7 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                        <form action="{{ route('client.moral.store') }}" method="POST" class="p-4 md:p-5">
+                        <form action="{{ route('client.moral.store') }}" method="POST" class="p-4 md:p-5" id="formulaire">
                             @csrf
                                 <div class="flex flex-row space-x-4">
                                     <div class="">
@@ -155,7 +155,7 @@
                                 </div>
 
                                 <div class="flex flex-row ml-64">
-                                    <button type="button" class="bg-[#53ABDC] text-white py-4 mr-2 rounded-lg" onclick="window.history.back();">Annuler</button>
+                                    <button type="button" class="bg-[#53ABDC] text-white py-4 mr-2 rounded-lg" onclick="resetForm()">Annuler</button>
                                     <button type="submit" class="bg-[#DCB253] text-white py-4 rounded-lg">Enrégistrer</button>
                                 </div>
 
@@ -232,7 +232,7 @@
                                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                         Modification d'un profil
                                                     </h3>
-                                                    <button type="button" class="text-gray-400 bg-[#EF2549] hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modale">
+                                                    <button type="button" class="text-gray-400 bg-[#EF2549] hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modale-{{ $personneMorale->id }}">
                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                         </svg>
@@ -240,7 +240,7 @@
                                                     </button>
                                                 </div>
                                                 <!-- Modal body -->
-                                                <form action="{{ route('client.moral.update', ['id' => $personneMorale->id]) }}" method="POST" class="p-4 md:p-5">
+                                                <form action="{{ route('client.moral.update', ['id' => $personneMorale->id]) }}" method="POST" class="p-4 md:p-5" id="formulaire">
                                                     @csrf
                                                         @method('PUT')
                                                             <div class="flex flex-row space-x-4" onclick="event.stopPropagation();">
@@ -333,7 +333,7 @@
                                                             </div>
 
                                                             <div class="flex flex-row ml-64">
-                                                                <button type="button" class="bg-[#53ABDC] text-white py-4 mr-2 rounded-lg" onclick="window.history.back();">Annuler</button>
+                                                                <button type="button" class="bg-[#53ABDC] text-white py-4 mr-2 rounded-lg" data-modal-toggle="crud-modale-{{ $personneMorale->id }}">Annuler</button>
                                                                 <button type="submit" class="bg-[#DCB253] text-white py-4 rounded-lg">Enrégistrer</button>
                                                             </div>
                                             </form>
@@ -354,7 +354,7 @@
                                                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
                                                     Suppression d'un profil
                                                     </h3>
-                                                    <button type="button" class="text-gray-400 bg-[#EF2549] hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modale">
+                                                    <button type="button" class="text-gray-400 bg-[#EF2549] hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" onclick="closeModal('popup-modal-{{ $personneMorale->id }}')">
                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                         </svg>
@@ -371,7 +371,7 @@
                                                         @csrf
                                                         @method('DELETE')
 
-                                                        <button type="button" class="text-white bg-[#53ABDC] hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2" data-modal-hide="popup-modal-{{ $personneMorale->id }}">
+                                                        <button type="button" onclick="closeModal('popup-modal-{{ $personneMorale->id }}')" class="text-white bg-[#53ABDC] hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
                                                             Annuler
                                                         </button>
                                                         <button type="submit" class="text-gray-500 bg-[#DCB253] hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
@@ -470,6 +470,26 @@
             });
         });
     });
+    function resetForm() {
+        // Récupérer tous les éléments du formulaire
+        var formElements = document.getElementById("formulaire").elements;
+
+        // Parcourir tous les éléments du formulaire
+        for (var i = 0; i < formElements.length; i++) {
+            var element = formElements[i];
+
+            // Réinitialiser la valeur de chaque élément du formulaire
+            if (element.type !== "submit") {
+                element.value = "";
+            }
+        }
+    }
+    function closeModal(modalId) {
+        var modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+    }
 </script>
 
 

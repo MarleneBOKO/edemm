@@ -12,24 +12,28 @@ class ClientPhysiqueOperationController extends Controller
     public function index(Request $request){
         $query = $request->input('query');
 
-
+        // Initialiser $operationPhysique à null en dehors de la condition
+        $operationPhysique = ClientPhysiqueOperation::paginate(5);
 
         // Effectuer la recherche dans les opérations physiques
-
-
-            if($query){
-                $operationPhysique = ClientPhysiqueOperation::query()
+        if($query){
+            $operationPhysique = ClientPhysiqueOperation::query()
                 ->where('nature', 'like', '%'.$query.'%')
                 ->orWhere('moyen', 'like', '%'.$query.'%')
                 ->paginate(5);
-            } else {
-                $request->session()->forget('search_query');
-                // Récupérer toutes les personnes physiques
-                $personnesPhysiques = PersonnePhysique::paginate(5);
-            }
+        } else {
+            // Récupérer toutes les personnes physiques
+            $personnesPhysiques = PersonnePhysique::paginate(5);
+        }
+
+        // Assurez-vous de retourner une valeur pour $personnesPhysiques même si la condition n'est pas remplie
+        if (!isset($personnesPhysiques)) {
+            $personnesPhysiques = PersonnePhysique::paginate(5);
+        }
 
         return view('client.operation', ['personnesPhysiques' => $personnesPhysiques, 'operationPhysique' => $operationPhysique]);
     }
+
 
 
     public function store(Request $request){

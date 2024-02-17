@@ -12,7 +12,7 @@ class ClientMoraleOperationController extends Controller
     public function index(Request $request){
         $query = $request->input('query');
 
-
+        $operationMorale = ClientMoraleOperation::paginate(5);
 
         // Effectuer la recherche dans les opérations Morales
 
@@ -23,7 +23,7 @@ class ClientMoraleOperationController extends Controller
                 ->orWhere('moyen', 'like', '%'.$query.'%')
                 ->paginate(5);
             } else {
-                $request->session()->forget('search_query');
+
                 // Récupérer toutes les personnes Morales
                 $personnesMorales = PersonneMorale::paginate(5);
             }
