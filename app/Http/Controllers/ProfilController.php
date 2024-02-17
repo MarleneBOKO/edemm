@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 class ProfilController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admin')->only( 'store'); // Appliquer uniquement aux méthodes de création d'utilisateurs
+    }
+
 
     public function store(Request $request)
     {

@@ -3,6 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
         @vite(['resources/css/app.css','resources/js/app.js'])
     </head>
     <body>
@@ -18,22 +20,16 @@
                 </div>
 
                 <!-- Partie centrale avec l'icône de menu et la barre de recherche -->
-                <div class="flex items-center space-x-4">
+                <div id="toggle-left-panel" class="flex items-center space-x-4">
                     <button class="text-black">
                         <!-- Icône de menu de Heroicons -->
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                         </svg>
                     </button>
-                    <div class="relative">
-                        <input type="text" placeholder="Recherche" class="bg-gray-200 px-8 py-1 rounded-full text-black">
-                        <!-- Icône de recherche dans le champ de recherche -->
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-4 w-4 absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-5.2-5.2"></path>
-                            <circle cx="10" cy="10" r="8"></circle>
-                        </svg>
-                    </div>
+
                 </div>
+
 
                 <!-- Partie droite avec la photo de l'admin (utilisateur) et les options -->
                 <div class="flex items-center ml-auto">
@@ -65,7 +61,7 @@
             <div class="flex h-full">
 
                 <!-- Partie gauche -->
-                <div class="bg-white  p-4  flex-shrink-0 h-full space-y-2">
+                <div class="bg-white  p-4  flex-shrink-0 h-full space-y-2" id="left-panel" >
                     <!-- Ligne 1 : Photo de l'admin et nom/prénom -->
                     <div class="flex items-center mb-4">
                         <img src="{{ asset('images/Ellipse 1.png') }}" alt="Admin" class="h-12 w-12 rounded-full mr-4">
@@ -88,24 +84,25 @@
                                 <span>Tableau de bord</span>
                             </div>
                     </a>
+                    @if(auth()->user()->isAdmin())
+                        <a href="{{ route('dashboard.utilisateur') }}">
+                                <div class="flex items-center">
 
-                   <a href="{{ route('dashboard.utilisateur') }}">
-                    <div class="flex items-center">
+                                    <svg class="w-6 h-6" viewBox="0 0 27 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_306_142)">
+                                        <path d="M15 2.66667C16.2361 2.66667 17.4445 3.05766 18.4723 3.79021C19.5001 4.52275 20.3012 5.56394 20.7742 6.78211C21.2473 8.00029 21.3711 9.34073 21.1299 10.6339C20.8888 11.9271 20.2935 13.115 19.4194 14.0474C18.5453 14.9797 17.4317 15.6147 16.2193 15.8719C15.0069 16.1291 13.7503 15.9971 12.6082 15.4925C11.4662 14.988 10.4901 14.1335 9.80331 13.0371C9.11656 11.9408 8.75 10.6519 8.75 9.33334L8.75625 9.044C8.82615 7.32767 9.51451 5.70638 10.6778 4.51822C11.841 3.33006 13.3894 2.66677 15 2.66667ZM17.5 18.6667C19.1576 18.6667 20.7473 19.369 21.9194 20.6193C23.0915 21.8695 23.75 23.5652 23.75 25.3333V26.6667C23.75 27.3739 23.4866 28.0522 23.0178 28.5523C22.5489 29.0524 21.913 29.3333 21.25 29.3333H8.75C8.08696 29.3333 7.45107 29.0524 6.98223 28.5523C6.51339 28.0522 6.25 27.3739 6.25 26.6667V25.3333C6.25 23.5652 6.90848 21.8695 8.08058 20.6193C9.25269 19.369 10.8424 18.6667 12.5 18.6667H17.5Z" fill="#ACABA3"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_306_142">
+                                        <rect width="27" height="32" fill="white"/>
+                                        </clipPath>
+                                        </defs>
+                                    </svg>
 
-                        <svg class="w-6 h-6" viewBox="0 0 27 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g clip-path="url(#clip0_306_142)">
-                            <path d="M15 2.66667C16.2361 2.66667 17.4445 3.05766 18.4723 3.79021C19.5001 4.52275 20.3012 5.56394 20.7742 6.78211C21.2473 8.00029 21.3711 9.34073 21.1299 10.6339C20.8888 11.9271 20.2935 13.115 19.4194 14.0474C18.5453 14.9797 17.4317 15.6147 16.2193 15.8719C15.0069 16.1291 13.7503 15.9971 12.6082 15.4925C11.4662 14.988 10.4901 14.1335 9.80331 13.0371C9.11656 11.9408 8.75 10.6519 8.75 9.33334L8.75625 9.044C8.82615 7.32767 9.51451 5.70638 10.6778 4.51822C11.841 3.33006 13.3894 2.66677 15 2.66667ZM17.5 18.6667C19.1576 18.6667 20.7473 19.369 21.9194 20.6193C23.0915 21.8695 23.75 23.5652 23.75 25.3333V26.6667C23.75 27.3739 23.4866 28.0522 23.0178 28.5523C22.5489 29.0524 21.913 29.3333 21.25 29.3333H8.75C8.08696 29.3333 7.45107 29.0524 6.98223 28.5523C6.51339 28.0522 6.25 27.3739 6.25 26.6667V25.3333C6.25 23.5652 6.90848 21.8695 8.08058 20.6193C9.25269 19.369 10.8424 18.6667 12.5 18.6667H17.5Z" fill="#ACABA3"/>
-                            </g>
-                            <defs>
-                            <clipPath id="clip0_306_142">
-                            <rect width="27" height="32" fill="white"/>
-                            </clipPath>
-                            </defs>
-                        </svg>
-
-                            <span>Utilisateurs</span>
-                        </div>
-                   </a>
+                                        <span>Utilisateurs</span>
+                                </div>
+                        </a>
+                        @endif
                    <a href="{{ route('client.physique') }}">
                     <div class="flex items-center">
 
@@ -168,6 +165,19 @@
 
                     button.addEventListener("click", function() {
                         dropdownMenu.classList.toggle("hidden");
+                    });
+                });
+                document.addEventListener('DOMContentLoaded', function() {
+                    const leftPanel = document.getElementById('left-panel');
+                    const toggleLeftPanelButton = document.getElementById('toggle-left-panel');
+                    const showLeftPanelButton = document.getElementById('show-left-panel');
+
+                    toggleLeftPanelButton.addEventListener('click', function() {
+                        // Basculer la visibilité de la partie gauche
+                        leftPanel.classList.toggle('hidden');
+
+                        // Basculer l'affichage du bouton pour ramener la partie gauche
+                        showLeftPanelButton.classList.toggle('hidden');
                     });
                 });
             </script>

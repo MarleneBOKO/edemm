@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Partie droite -->
-<div class="flex flex-col bg-[#F2EDF3] w-full h-full m-4">
+<div class="flex flex-col bg-[#F2EDF3] w-full h-full m-4 overflow-hidden">
     <div class="flex flex-row mt-4 ml-6">
         <svg class="w-6 h-6" viewBox="0 0 27 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M13.7931 6.33001C13.7146 6.24099 13.6101 6.19131 13.5015 6.19131C13.3928 6.19131 13.2884 6.24099 13.2099 6.33001L3.50146 17.3219C3.46023 17.3686 3.42743 17.4248 3.40504 17.487C3.38266 17.5492 3.37115 17.6161 3.37121 17.6838L3.36963 28C3.36963 28.5304 3.54742 29.0391 3.86389 29.4142C4.18035 29.7893 4.60958 30 5.05713 30H10.1249C10.3487 30 10.5633 29.8947 10.7215 29.7071C10.8798 29.5196 10.9687 29.2652 10.9687 29V20.5C10.9687 20.3674 11.0131 20.2402 11.0922 20.1465C11.1713 20.0527 11.2786 20 11.3905 20H15.6093C15.7212 20 15.8285 20.0527 15.9076 20.1465C15.9867 20.2402 16.0312 20.3674 16.0312 20.5V29C16.0312 29.2652 16.12 29.5196 16.2783 29.7071C16.4365 29.8947 16.6511 30 16.8749 30H21.9406C22.3881 30 22.8173 29.7893 23.1338 29.4142C23.4503 29.0391 23.6281 28.5304 23.6281 28V17.6838C23.6281 17.6161 23.6166 17.5492 23.5942 17.487C23.5718 17.4248 23.539 17.3686 23.4978 17.3219L13.7931 6.33001Z" fill="#ACABA3"/>
@@ -48,10 +48,10 @@
 </div>
 
 <h3 class="mt-4 ml-8 font-bold">Activités récentes</h3>
-<div class="flex flex-row mt-4 ml-6 m-4">
-    <div class="bg-white p-4 w-full md:w-1/2 mb-4 md:mb-0 mr-2">
+<div class="flex flex-row mt-4 ml-6 m-4 overflow-hidden ">
+    <div class="bg-white p-4 w-full md:w-1/2 mb-4 md:mb-0 mr-2 overflow-hidden">
         <h4 class="text-black mb-4 font-bold text-[17px]">Personne Physique</h4>
-        <table class="table-auto w-full h-auto mb-4">
+        <table class="table-auto w-full h-auto mb-4 overflow-auto">
             <thead>
                 <tr>
                     <th class="p-2">Prénom & Nom</th>
@@ -75,7 +75,7 @@
         </table>
     </div>
 
-    <div class="bg-white p-4 w-full md:w-1/2 ml-2">
+    <div class="bg-white p-4 w-full md:w-1/2 ml-2 overflow-hidden">
         <h4 class="text-black mb-4 font-bold text-[17px]">Personne Morale</h4>
         <table class="table-auto w-full h-auto mb-4">
             <thead>

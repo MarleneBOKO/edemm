@@ -370,11 +370,11 @@
                                                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Êtes-vous sûr de supprimer cet utilisateur ?</h3>
 
                                                         <!-- Utilisez un formulaire pour la suppression -->
-                                                        <form action="{{ route('client.physique.destroy', ['id' => $personnePhysique->id]) }}" method="POST">
+                                                        <form action="{{ route('client.physique.destroy', ['id' => $personnePhysique->id]) }}" method="POST" onclick="event.stopPropagation();">
                                                             @csrf
                                                             @method('DELETE')
 
-                                                            <button onclick="closeModal('popup-modal-{{ $personnePhysique->id }}')" type="button" class="text-white bg-[#53ABDC] hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                                                            <button type="button" onclick="closeModal('popup-modal-{{ $personnePhysique->id }}')" class="text-white bg-[#53ABDC] hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
                                                                 Annuler
                                                             </button>
                                                             <button type="submit" class="text-gray-500 bg-[#DCB253] hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">

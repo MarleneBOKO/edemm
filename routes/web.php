@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PersonnesMoralesController;
 use App\Http\Controllers\ClientPhysiqueOperationController;
 use App\Http\Controllers\ClientMoraleOperationController;
+use App\Http\Middleware\CheckAdminRole;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +24,13 @@ use App\Http\Controllers\ClientMoraleOperationController;
 Route::get('/', function () {
     return redirect()->route('login');
 });
+Route::middleware(['auth', CheckAdminRole::class])->group(function () {
+    Route::get('/users', [UtilisateursController::class, 'index'])->name('dashboard.utilisateur');
+    Route::get('/users/{id}/edit', [UtilisateursController::class, 'edit'])->name('edit.user');
+    Route::delete('/users/{id}/delete', [UtilisateursController::class, 'delete'])->name('delete.user');
+    Route::put('/users/{id}/update', [UtilisateursController::class, 'update'])->name('update.user');
+});
+
 
 Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [UserController::class, 'store'])->name('register');
@@ -37,10 +45,7 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/acceuil', [AcceuilController::class, 'acceuil'])->name('acceuil');
 
 
-Route::get('/users', [UtilisateursController::class, 'index'])->name('dashboard.utilisateur');
-Route::get('/users/{id}/edit', [UtilisateursController::class, 'edit'])->name('edit.user');
-Route::delete('/users/{id}/delete', [UtilisateursController::class, 'delete'])->name('delete.user');
-Route::put('/users/{id}/update', [UtilisateursController::class, 'update'])->name('update.user');
+
 
 
 

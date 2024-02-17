@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 class UtilisateursController extends Controller
 {
+    
+
 
     public function index(Request $request){
         // Récupérer la requête de recherche depuis l'URL

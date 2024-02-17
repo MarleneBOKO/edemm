@@ -27,4 +27,8 @@ class PersonneMorale extends Model
         'tel_portable',
         'email',
     ];
+    public function operationsMorales()
+    {
+        return $this->hasMany(ClientMoraleOperation::class);
+    }
 }
